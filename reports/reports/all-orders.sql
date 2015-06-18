@@ -1,5 +1,5 @@
 -- Time Report
--- This report will let you retrieve time for all projects using multiple.
+-- This report will let you retrieve time for all projects using multiple
 -- filters on project, user, dates, activity and efforts.
 -- VARIABLE: {
 --      name: "date_range",
@@ -23,15 +23,16 @@ SELECT p.project_id, p.name, p.lft, p.depth,
   FROM project_info p
   LEFT JOIN time_entry_info t
     ON t.project_id = p.project_id
- --WHERE 1 = 1
- --  AND ($project_id IS NULL OR p.project_id = $project_id)
- --  AND ($user_id IS NULL OR t.user_id = $user_id)
- --  AND ($spent_on_start IS NULL OR t.spent_on BETWEEN $spent_on_start AND $spent_on_end)
---   AND (NULL IS NULL OR t.activity_id = NULL)
---   AND ($effort_values IS NULL OR t.effort_values REGEXP $effort_values);  --must have single quotes and | between values for regexp
-
-
 /*
+ WHERE 1 = 1
+   AND ($project_id IS NULL OR p.project_id = $project_id)
+   AND ($user_id IS NULL OR t.user_id = $user_id)
+   AND ($spent_on_start IS NULL OR t.spent_on BETWEEN $spent_on_start AND $spent_on_end)
+   AND (NULL IS NULL OR t.activity_id = NULL)
+   AND ($effort_values IS NULL OR t.effort_values REGEXP $effort_values);  --must have single quotes and | between values for regexp
+
+
+
 SELECT
     order_id as `Order Id`,
     created_at as `Order Date`,
