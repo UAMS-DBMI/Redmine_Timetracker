@@ -1,0 +1,40 @@
+O:20:"FileSystemCacheValue":5:{s:3:"key";O:18:"FileSystemCacheKey":2:{s:3:"key";s:14:"all-orders.sql";s:5:"group";s:14:"report_headers";}s:5:"value";a:14:{s:7:"Filters";a:0:{}s:9:"Variables";a:1:{s:10:"date_range";a:7:{s:4:"name";s:10:"date_range";s:7:"display";s:10:"Date Range";s:4:"type";s:9:"daterange";s:7:"default";a:2:{s:5:"start";s:9:"yesterday";s:3:"end";s:9:"yesterday";}s:5:"empty";b:0;s:8:"multiple";b:0;s:6:"format";s:11:"Y-m-d H:i:s";}}s:8:"Includes";a:0:{}s:4:"Name";s:11:"Time Report";s:11:"Description";s:126:"
+This report will let you retrieve time for all projects using multiple
+filters on project, user, dates, activity and efforts.";s:4:"Type";s:5:"Mysql";s:8:"Database";s:5:"mysql";s:11:"Environment";s:4:"main";s:12:"Environments";a:1:{i:0;a:2:{s:4:"name";s:4:"main";s:8:"selected";b:1;}}s:15:"Query_Formatted";s:2754:"<pre class='prettyprint linenums lang-sql'><span style="font-weight:bold;">SELECT</span> 
+  <span style="color: #333;">p</span><span >.</span><span style="color: #333;">project_id</span><span >,</span> 
+  <span style="color: #333;">p</span><span >.</span><span style="color: #333;">name</span><span >,</span> 
+  <span style="color: #333;">p</span><span >.</span><span style="color: #333;">lft</span><span >,</span> 
+  <span style="color: #333;">p</span><span >.</span><span style="color: #333;">depth</span><span >,</span> 
+  <span style="color: #333;">t</span><span >.</span><span style="color: #333;">time_entry_id</span><span >,</span> 
+  <span style="color: #333;">t</span><span >.</span><span style="color: #333;">user_id</span><span >,</span> 
+  <span style="color: #333;">t</span><span >.</span><span style="color: #333;">issue_id</span><span >,</span> 
+  <span style="color: #333;">t</span><span >.</span><span style="color: #333;">hours</span><span >,</span> 
+  <span style="color: #333;">t</span><span >.</span><span style="color: #333;">spent_on</span><span >,</span> 
+  <span style="color: #333;">t</span><span >.</span><span style="color: #333;">activity_id</span><span >,</span> 
+  <span style="color: #333;">t</span><span >.</span><span style="color: #333;">effort_values</span><span >,</span> 
+  <span style="color: #333;">t</span><span >.</span><span style="color: #333;">comments</span> 
+<span style="font-weight:bold;">FROM</span> 
+  <span style="color: #333;">project_info</span> <span style="color: #333;">p</span> 
+  <span style="font-weight:bold;">LEFT JOIN</span> <span style="color: #333;">time_entry_info</span> <span style="color: #333;">t</span> <span style="font-weight:bold;">ON</span> <span style="color: #333;">t</span><span >.</span><span style="color: #333;">project_id</span> <span >=</span> <span style="color: #333;">p</span><span >.</span><span style="color: #333;">project_id</span> 
+  <span style="color: #aaa;">/*
+   WHERE 1 = 1
+     AND ($project_id IS NULL OR p.project_id = $project_id)
+     AND ($user_id IS NULL OR t.user_id = $user_id)
+     AND ($spent_on_start IS NULL OR t.spent_on BETWEEN $spent_on_start AND $spent_on_end)
+     AND (NULL IS NULL OR t.activity_id = NULL)
+     AND ($effort_values IS NULL OR t.effort_values REGEXP $effort_values);  --must have single quotes and | between values for regexp
+  
+  
+  
+  SELECT
+      order_id as `Order Id`,
+      created_at as `Order Date`,
+      CONCAT(customer_fname, &quot; &quot;, customer_lname) as `Customer Name`,
+      customer_id as `Customer Id`,
+      grand_total as `Grand Total`,
+      status as `Order Status`
+  FROM
+      orders
+  WHERE
+      created_at BETWEEN &quot;{{ range.start }}&quot; AND &quot;{{ range.end }}&quot;
+  */</span></pre>";s:6:"report";s:14:"all-orders.sql";s:3:"url";s:74:"http://localhost:85/timetracker/reports/report/html/?report=all-orders.sql";s:6:"is_dir";b:0;s:2:"Id";s:13:"allorders_sql";}s:3:"ttl";N;s:7:"expires";N;s:7:"created";i:1434635504;}}s.sql";s:3:"url";s:74:"http://localhost:85/timetracker/reports/report/html/?report=all-orders.sql";s:6:"is_dir";b:0;s:2:"Id";s:13:"allorders_sql";}s:3:"ttl";N;s:7:"expires";N;s:7:"created";i:1434634451;}

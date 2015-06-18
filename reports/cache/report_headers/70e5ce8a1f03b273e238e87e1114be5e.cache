@@ -1,0 +1,16 @@
+O:20:"FileSystemCacheValue":5:{s:3:"key";O:18:"FileSystemCacheKey":2:{s:3:"key";s:20:"mysql/all-orders.sql";s:5:"group";s:14:"report_headers";}s:5:"value";a:14:{s:7:"Filters";a:0:{}s:9:"Variables";a:1:{s:5:"range";a:7:{s:4:"name";s:5:"range";s:7:"display";s:12:"Report Range";s:4:"type";s:9:"daterange";s:7:"default";a:2:{s:5:"start";s:9:"yesterday";s:3:"end";s:9:"yesterday";}s:5:"empty";b:0;s:8:"multiple";b:0;s:6:"format";s:11:"Y-m-d H:i:s";}}s:8:"Includes";a:0:{}s:4:"Name";s:10:"All Orders";s:11:"Description";s:151:"
+This report lets you view all orders within a specified time period.
+You can click on a customer name to drill down into all orders for that customer.";s:4:"Type";s:5:"Mysql";s:8:"Database";s:5:"mysql";s:11:"Environment";s:4:"main";s:12:"Environments";a:1:{i:0;a:2:{s:4:"name";s:4:"main";s:8:"selected";b:1;}}s:15:"Query_Formatted";s:1597:"<pre class='prettyprint linenums lang-sql'><span style="font-weight:bold;">SELECT</span> 
+  <span style="color: #333;">order_id</span> <span style="font-weight:bold;">as</span> <span style="color: purple;">`Order Id`</span><span >,</span> 
+  <span style="color: #333;">created_at</span> <span style="font-weight:bold;">as</span> <span style="color: purple;">`Order Date`</span><span >,</span> 
+  <span style="font-weight:bold;">CONCAT</span>(
+    <span style="color: #333;">customer_fname</span><span >,</span> <span style="color: blue;">&quot; &quot;</span><span >,</span> <span style="color: #333;">customer_lname</span>
+  ) <span style="font-weight:bold;">as</span> <span style="color: purple;">`Customer Name`</span><span >,</span> 
+  <span style="color: #333;">customer_id</span> <span style="font-weight:bold;">as</span> <span style="color: purple;">`Customer Id`</span><span >,</span> 
+  <span style="color: #333;">grand_total</span> <span style="font-weight:bold;">as</span> <span style="color: purple;">`Grand Total`</span><span >,</span> 
+  <span style="font-weight:bold;">status</span> <span style="font-weight:bold;">as</span> <span style="color: purple;">`Order Status`</span> 
+<span style="font-weight:bold;">FROM</span> 
+  <span style="color: #333;">orders</span> 
+<span style="font-weight:bold;">WHERE</span> 
+  <span style="color: #333;">created_at</span> <span style="font-weight:bold;">BETWEEN</span> <span style="color: blue;">&quot;{{ range.start }}&quot;</span> 
+  <span style="font-weight:bold;">AND</span> <span style="color: blue;">&quot;{{ range.end }}&quot;</span></pre>";s:6:"report";s:20:"mysql/all-orders.sql";s:3:"url";s:80:"http://localhost:85/timetracker/reports/report/html/?report=mysql/all-orders.sql";s:6:"is_dir";b:0;s:2:"Id";s:19:"mysql_allorders_sql";}s:3:"ttl";N;s:7:"expires";N;s:7:"created";i:1434558359;}
