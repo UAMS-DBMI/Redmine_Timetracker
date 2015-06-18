@@ -305,10 +305,10 @@ and open the template in the editor.
 
         <?php
         #sleep(2);
-        #header('Location: /timetracker/loggingtime.php?date='.$dateFormatted);
+        #header('Location: /timetracker/index.php?date='.$dateFormatted);
         ?>
         <script type="text/javascript">
-            window.location= 'loggingtime.php?date=<?php echo $dateFormatted; ?>'
+            window.location= 'index.php?date=<?php echo $dateFormatted; ?>'
         </script>
     </body>
 </html>

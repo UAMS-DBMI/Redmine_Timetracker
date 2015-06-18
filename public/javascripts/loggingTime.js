@@ -31,7 +31,7 @@ $(function () {
         numberOfMonths: 1,
         onSelect: function (date) {
             //alert(date);
-            window.location="loggingtime.php?date="+date;
+            window.location="index.php?date="+date;
             
         }
     });
