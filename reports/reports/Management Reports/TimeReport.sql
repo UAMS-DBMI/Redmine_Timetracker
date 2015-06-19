@@ -4,17 +4,21 @@
 -- VARIABLE: {
 --      name: "date_range",
 --      display: "Date Range",
---      type: "daterange", 
+--      type: "daterange",
 --      default: { start: "today", end: "today" }
 -- }
--- FILTER: { 
---      column: "Customer Name", 
---      filter: "drilldown",
---      params: {
---          macros: { "id": { column: "Customer Id" } },
---          report: "drilldown/customer-orders.sql"
---      }
+-- VARIABLE: {
+--      name: "user_filter",
+--      display: "User",
+--      type: "select",
+--      database_options: {
+--          table: "time_entry_info",
+--          column: "user_name",
+--          all: true
+--      },
+--      multiple: true
 -- }
+
 
 SELECT p.project_id, p.name, p.lft, p.depth,
        t.time_entry_id, t.user_id, t.user_name,
@@ -47,4 +51,12 @@ FROM
     orders
 WHERE
     created_at BETWEEN "{{ range.start }}" AND "{{ range.end }}"
+
+-- FILTER: {
+--      column: "user_id",
+--      filter: "drilldown",
+--      params: {
+--          report: "drilldown/UserDrillDown.sql"
+--      }
+-- }
 */
