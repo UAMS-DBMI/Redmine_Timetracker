@@ -1,0 +1,17 @@
+{
+  "title": "Management Dashboard",
+  "description": "Dashboard for Management Reports",
+  "reports": [
+    {
+      "report": "Management Reports/TimeReport.php",
+      "title": "Time Report",
+      "macros": {
+        "date_range": "2015-05-01 00:00:00 - 2015-05-31 23:59:59"
+      },
+      "format": "html",
+      "newRow": false,
+      "style": "max-height: 400px; overflow-y: auto; overflow-x: hidden;",
+      "class": "col-md-6"
+    }
+  ]
+}
