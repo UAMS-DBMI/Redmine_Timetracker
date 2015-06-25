@@ -36,12 +36,15 @@ and open the template in the editor.
         <form name="form1" method="post" action="submit.php">
             <div class="navbar navbar-default navbar-fixed-top">
                 <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="">Redmine Time Tracker</a>
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        <div class = "navbar-form navbar-left">
-                            <input class="form-control" type="text" style="width:150px" id="selecteddate" name="selecteddate" value="<?php
+                    <table width="100%">
+                        <tr>
+                            <td style="width:200px">
+                                <div class="navbar-header">
+                                    <a class="navbar-brand" href="index.php">Redmine Time Tracker</a>
+                                </div>
+                            </td>
+                            <td style="width:150px">
+                                <input class="form-control" type="text" style="width:150px" id="selecteddate" name="selecteddate" value="<?php
                                 if (isset($_POST['selecteddate'])) {
                                     echo $_POST['selecteddate'];
                                 } else if (isset($_GET['date'])) {
@@ -50,17 +53,22 @@ and open the template in the editor.
                                     echo date('m/d/Y');
                                 }
                                 ?>">
-                        </div>
-                        <ul class="nav navbar-nav">
-                            <li><a href="reports/" target="_blank">Reports</a></li>
-                        </ul>
-                        <div class="navbar-form navbar-right">
-                            <?php
-                            echo "Logged in as: <b>".strtolower($_SESSION['username'])."</b> | ";
-                            echo "<a id='signout' href='login.php?action=signout'>Signout</a>";
-                            ?>
-                        </div>
-                    </div>
+                            </td>
+                            <td>
+                                <ul class="nav navbar-nav">
+                                    <li><a href="reports/" target="_blank">Reports</a></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <div class="navbar-form navbar-right">
+                                    <?php
+                                    echo "Logged in as: <b>".strtolower($_SESSION['username'])."</b> | ";
+                                    echo "<a id='signout' href='login.php?action=signout'>Signout</a>";
+                                    ?>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
             <div class="container-fluid">
