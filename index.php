@@ -21,35 +21,47 @@ and open the template in the editor.
             .ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
                 background-color: black;
             }
+
+            body {
+                 padding-top: 40px;
+             }
+
+
         </style>
         <script type="text/javascript" src="public/javascripts/loggingTime.js"></script>
     </head>
     <body>
         <br/>
-        <div class="container">
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="">Redmine Time Tracker</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <div class = "navbar-form navbar-left">
+                        <input class="form-control" type="text" style="width:150px" id="selecteddate" name="selecteddate" value="<?php
+                        if (isset($_POST['selecteddate'])) {
+                            echo $_POST['selecteddate'];
+                        } else if (isset($_GET['date'])) {
+                            echo date('m/d/Y', strtotime($_GET['date']));;
+                        }else {
+                            echo date('m/d/Y');
+                        }
+                        ?>">
+                    </div>
+                    <div class="navbar-form navbar-right">
+                        <?php
+                        echo "Logged in as: <b>".strtolower($_SESSION['username'])."</b> | ";
+                        echo "<a id='signout' href='login.php?action=signout'>Signout</a>";
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
             <div class="panel panel-default">
                 <form name="form1" method="post" action="submit.php">
                     <input type="hidden" value="" id="newCol">
-            
-                    <div class="panel-heading">
-                        <div style="float:left">
-                            <input class="form-control" type="text" style="width:150px" id="selecteddate" name="selecteddate" value="<?php
-                                if (isset($_POST['selecteddate'])) {
-                                    echo $_POST['selecteddate'];
-                                } else if (isset($_GET['date'])) {
-                                    echo date('m/d/Y', strtotime($_GET['date']));;
-                                }else {
-                                    echo date('m/d/Y');
-                                }
-                                ?>">
-                        </div>
-                        <div style="float:right;text-align:right">
-                            <?php
-                            echo "Logged in as: <b>".strtolower($_SESSION['username'])."</b> | ";
-                            echo "<a id='signout' href='login.php?action=signout'>Signout</a>";
-                            ?>
-                        </div>
-                    </div>
 
                     <div class="panel-body">
                         <?php
