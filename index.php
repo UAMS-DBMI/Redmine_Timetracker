@@ -23,7 +23,8 @@ and open the template in the editor.
             }
 
             body {
-                 padding-top: 40px;
+                padding-top: 40px;
+                padding-bottom: 50px;
              }
 
 
@@ -41,15 +42,18 @@ and open the template in the editor.
                     <div class="navbar-collapse collapse">
                         <div class = "navbar-form navbar-left">
                             <input class="form-control" type="text" style="width:150px" id="selecteddate" name="selecteddate" value="<?php
-                            if (isset($_POST['selecteddate'])) {
-                                echo $_POST['selecteddate'];
-                            } else if (isset($_GET['date'])) {
-                                echo date('m/d/Y', strtotime($_GET['date']));;
-                            }else {
-                                echo date('m/d/Y');
-                            }
-                            ?>">
+                                if (isset($_POST['selecteddate'])) {
+                                    echo $_POST['selecteddate'];
+                                } else if (isset($_GET['date'])) {
+                                    echo date('m/d/Y', strtotime($_GET['date']));;
+                                }else {
+                                    echo date('m/d/Y');
+                                }
+                                ?>">
                         </div>
+                        <ul class="nav navbar-nav">
+                            <li><a href="reports/" target="_blank">Reports</a></li>
+                        </ul>
                         <div class="navbar-form navbar-right">
                             <?php
                             echo "Logged in as: <b>".strtolower($_SESSION['username'])."</b> | ";
@@ -113,7 +117,6 @@ and open the template in the editor.
                                 </tr>
                             </thead>
                             <tbody>
-
                                 <?php
                                 $effortFunctions = "";
                                 while ($row1 = mysqli_fetch_array($listProjects)) {
@@ -272,23 +275,33 @@ and open the template in the editor.
                                     }
                                 }
                                 ?>
-                                <tr>
-                                    <td colspan="2" style="text-align:right;vertical-align:middle">
-                                        Total:
-                                    </td>
-                                    <td id='total' colspan="2" style="text-align:left;vertical-align:middle" value='0'></td>
-                                    <td colspan="5" style="text-align:right;vertical-align:middle">
-                                        <!--<input type="submit" value="Submit" name="submit" class="btn btn-primary btn-lrg"/>-->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="8" style="text-align:center">
-                                        <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Submit">Submit</button>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+            <div class="navbar navbar-default navbar-fixed-bottom">
+                <div class="container-fluid">
+                    <table width="100%" style="margin-top: 5px;margin-bottom: 5px">
+                        <tr>
+                            <td style="width:75px">
+                                <table width="100%">
+                                    <tr>
+                                        <td style="text-align:center;vertical-align:middle;font-weight: bold;text-decoration: underline" >
+                                            Total
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td id='total' style="text-align:center;vertical-align:middle;font-weight: bold" value='0'></td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td style="text-align:right;vertical-align:middle">
+                                <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Submit">Submit</button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </form>

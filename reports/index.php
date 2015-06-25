@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (empty($_SESSION['loggedin']) or $_SESSION['loggedin'] == "false"){
+    header("Location: ../login.php");
+}
 
 //set php ini so the page doesn't time out for long requests
 ini_set('max_execution_time', 300);
@@ -10,8 +13,9 @@ include 'vendor/autoload.php';
 //sets up autoload (looks in classes/local/, classes/, and lib/ in that order)
 require 'lib/PhpReports/PhpReports.php';
 
-header("Access-Control-Allow-Origin: *");
+//header("Access-Control-Allow-Origin: *");
 
+/*
 // Google Analytics API
 if(isset(PhpReports::$config['ga_api'])) {
   $ga_client = new Google_Client();
@@ -50,6 +54,7 @@ if(isset(PhpReports::$config['ga_api'])) {
     exit;
   });
 }
+*/
 
 Flight::route('/',function() {
 	PhpReports::listReports();
@@ -91,6 +96,7 @@ Flight::route('/set-environment',function() {
 
     echo '{ "status": "OK" }';
 });
+
 
 //email report
 Flight::route('/email',function() {
