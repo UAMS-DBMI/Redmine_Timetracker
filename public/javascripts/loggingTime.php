@@ -185,10 +185,15 @@ $(function () {
 
 function calculateSum() {
     var sum = 0;
+    var weeksum = 0;
     $(".hours").each(function () {
         if (!isNaN(this.value) && this.value.length != 0) {
             sum += parseFloat(this.value);
         }
     });
     $("#total").html(sum.toFixed(2));
+
+    weeksum = sum + <?php session_start(); $_SESSION['weekhours'] ?>
+
+    $("#weektotal").html(weeksum.toFixed(2));
 }

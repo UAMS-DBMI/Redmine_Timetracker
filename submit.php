@@ -59,7 +59,7 @@ and open the template in the editor.
                     $activity = $_POST['activity'][$i];
                     $aRRactivity = explode('-', $activity);
                     $daysAdded = $_POST['daysAdded'][$i];
-                    $notes = $_POST['notes'][$i];
+                    $notes = str_replace("'","''",$_POST['notes'][$i]);
                     $action_type = $_POST['action_type'][$i];
                     
                     if(!empty($_POST['istri_cvid'][$i])){

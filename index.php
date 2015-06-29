@@ -25,11 +25,15 @@ and open the template in the editor.
             body {
                 padding-top: 40px;
                 padding-bottom: 50px;
-             }
+            }
+
+            .dropdown-menu {
+                margin-bottom: 70px;
+            }
 
 
         </style>
-        <script type="text/javascript" src="public/javascripts/loggingTime.js"></script>
+        <script type="text/javascript" src="public/javascripts/loggingTime.php"></script>
     </head>
     <body>
         <br/>
@@ -79,6 +83,7 @@ and open the template in the editor.
                         <?php
                         require_once 'db.php';
                         $pid = $_SESSION['userid'];
+                        $_SESSION['weekhours'] = 10;
 
                         ## Setting date for calendar
                         if (isset($_POST['selecteddate'])) {
@@ -254,8 +259,10 @@ and open the template in the editor.
                                     }
                                     echo "<td style='text-align:center'><input id='tri' name = \"" . $row1['row'] ."tri[]\" type='checkbox' value='tri' ".$checkedTRI."/></td>";
 
+                                    $problem = array("'",'"');
+                                    $replace = array("&#39;","&#34;");
                                     //Populate Notes
-                                    echo "<td><input class='form-control' style='width:200px' id='notes' name = \"notes[]\" type='text' value = '".$row1['comments']."' /></td>";
+                                    echo "<td><input class='form-control' style='width:200px' id='notes' name = \"notes[]\" type='text' value = '".str_replace($problem,$replace,$row1['comments'])."' /></td>";
 
                                     //Add days
                                     echo "<td>";
@@ -289,27 +296,29 @@ and open the template in the editor.
                 </div>
             </div>
             <div class="navbar navbar-default navbar-fixed-bottom">
-                <div class="container-fluid">
-                    <table width="100%" style="margin-top: 5px;margin-bottom: 5px">
-                        <tr>
-                            <td style="width:75px">
-                                <table width="100%">
-                                    <tr>
-                                        <td style="text-align:center;vertical-align:middle;font-weight: bold;text-decoration: underline" >
-                                            Total
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td id='total' style="text-align:center;vertical-align:middle;font-weight: bold" value='0'></td>
-                                    </tr>
-                                </table>
-                            </td>
+                <div class="container-fluid" style="padding-top: 5px;padding-bottom: 5px">
+                    <div style="float: left">
+                        <table width="100%">
+                            <tr>
+                                <td style="text-align:right;vertical-align:middle;font-weight: bold;text-decoration: underline" >
+                                    Day Total:
+                                </td>
+                                <td id='total' style="text-align:left;vertical-align:middle;font-weight: bold; padding-left: 5px" value='0'></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:right;vertical-align:middle;font-weight: bold;text-decoration: underline" >
+                                    Week Total:
+                                </td>
+                                <div style="float: right">
+                                    <td id='weektotal' style="text-align:left;vertical-align:middle;font-weight: bold; padding-left: 5px" value='0'></td>
+                                </div>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="float: right">
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Submit" style="width:250px">Submit</button>
+                    </div>
 
-                            <td style="text-align:right;vertical-align:middle">
-                                <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Submit">Submit</button>
-                            </td>
-                        </tr>
-                    </table>
                 </div>
             </div>
         </form>
