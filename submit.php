@@ -304,7 +304,6 @@ and open the template in the editor.
                         }
                     }
 
-
                     #echo '<br>************************************************<br>';
                 }
                 else if($hr_flag==1){//if Hours is changed to null or 0
