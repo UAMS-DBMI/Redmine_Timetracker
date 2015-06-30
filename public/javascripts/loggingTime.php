@@ -193,7 +193,8 @@ function calculateSum() {
     });
     $("#total").html(sum.toFixed(2));
 
-    weeksum = sum + <?php session_start(); $_SESSION['weekhours'] ?>
+
+    weeksum = sum + <?php session_start(); echo $_SESSION['weektotal'] ?>
 
     $("#weektotal").html(weeksum.toFixed(2));
 }

@@ -83,7 +83,9 @@ and open the template in the editor.
                         <?php
                         require_once 'db.php';
                         $pid = $_SESSION['userid'];
-                        $_SESSION['weekhours'] = 10;
+
+
+                        # get hours for week
 
                         ## Setting date for calendar
                         if (isset($_POST['selecteddate'])) {
@@ -95,9 +97,21 @@ and open the template in the editor.
                             #$date = '2015-06-04';
                         }
 
+                        #$lastsunday = strtotime("last sunday", $date);
+                        #$nextsaturday = strtotime("next saturday", $date);
+
                         ## Setting date for SQL parameter
                         $date = date('Y-m-d', strtotime($date));
+                        $sunday = date('Y-m-d', strtotime('last Sunday', strtotime($date))); #date('Y-m-d', strtotime($lastsunday));
+                        $saturday = date('Y-m-d', strtotime('next Saturday', strtotime($date))); #date('Y-m-d', strtotime($nextsaturday));
                         #echo "********DATE  " . $date . "**********";
+                        #echo $pid;
+                        #echo $sunday;
+                        #echo $date;
+                        #echo $saturday;
+
+                        $weekTotal = RedmineDB::getInstance()->getWeekTotal($pid, $sunday, $date, $saturday);
+                        $_SESSION['weektotal'] = $weekTotal;
 
                         ## Execute SQLs to populate table
                         $listProjects = RedmineDB::getInstance()->projectsByUsers($pid, $date);
@@ -121,12 +135,12 @@ and open the template in the editor.
                                 <tr>
                                     <th></th>
                                     <th>Name</th>
-                                    <th style="text-align:center">Time</th>
-                                    <th style="text-align:center">Activity</th>
-                                    <th style="text-align:center">Effort</th>
-                                    <th style="text-align:center">TRI</th>
-                                    <th style="text-align:center">Note</th>
-                                    <th style="text-align:center">Additional Days</th>
+                                    <th>Time</th>
+                                    <th>Activity</th>
+                                    <th>Effort</th>
+                                    <th>TRI</th>
+                                    <th>Note</th>
+                                    <th>Additional Days</th>
                                 </tr>
                             </thead>
                             <tbody>
