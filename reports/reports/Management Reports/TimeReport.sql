@@ -13,7 +13,8 @@
 --      type: "select",
 --      database_options: {
 --          table: "time_entry_info",
---          column: "user_name"
+--          column: "user_name",
+--          all: true
 --      },
 --      multiple: false
 -- }
@@ -29,7 +30,7 @@ SELECT p.project_id, p.name, p.lft, p.depth,
     ON t.project_id = p.project_id
  WHERE 1 = 1
    AND (t.spent_on BETWEEN "{{ date_range.start }}" AND "{{ date_range.end }}")
-   AND ("{{ user }}" IS NULL OR t.user_name = "{{ user_filter }}")
+   AND ("{{ user_filter }}" = "ALL" OR t.user_name = "{{ user_filter }}")
 /*
  WHERE 1 = 1
    AND (t.spent_on BETWEEN "{{ date_range.start }}" AND "{{ date_range.end }}")
