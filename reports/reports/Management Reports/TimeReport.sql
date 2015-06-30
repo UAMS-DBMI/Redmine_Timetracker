@@ -13,8 +13,7 @@
 --      type: "select",
 --      database_options: {
 --          table: "time_entry_info",
---          column: "user_name",
---          all: true
+--          column: "user_name"
 --      },
 --      multiple: true
 -- }
