@@ -15,20 +15,21 @@
 --          table: "time_entry_info",
 --          column: "user_name"
 --      },
---      multiple: true
+--      multiple: false
 -- }
 
 
 SELECT p.project_id, p.name, p.lft, p.depth,
        t.time_entry_id, t.user_id, t.user_name,
-       t.issue_id, t.issue_subject,
-       t.hours, t.spent_on, t.activity_id,
+       t.issue_id, t.issue_subject, t.hours,
+  t.spent_on, t.activity_id, t.activity_name,
        t.effort_values, t.comments
   FROM project_info p
   LEFT JOIN time_entry_info t
     ON t.project_id = p.project_id
  WHERE 1 = 1
    AND (t.spent_on BETWEEN "{{ date_range.start }}" AND "{{ date_range.end }}")
+   AND ("{{ user }}" IS NULL OR t.user_name = "{{ user_filter }}")
 /*
  WHERE 1 = 1
    AND (t.spent_on BETWEEN "{{ date_range.start }}" AND "{{ date_range.end }}")
