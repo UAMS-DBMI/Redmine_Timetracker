@@ -13,7 +13,7 @@
 --      type: "select",
 --      database_options: {
 --          table: "project_drop",
---          column: "name",
+--          column: "longname",
 --          all: true
 --      },
 --      multiple: false
@@ -76,7 +76,7 @@
 -- }
 
 
-SELECT p.project_id, p.name AS 'Project', p.lft, p.depth,
+SELECT p.project_id, p.longname AS 'Project', p.lft, p.depth,
        t.time_entry_id, t.user_id, t.user_name AS 'User',
        t.issue_id, t.issue_subject AS 'Issue', t.hours AS 'Hours',
        t.spent_on AS 'Date', t.activity_id, t.activity_name AS 'Activity',
@@ -86,7 +86,7 @@ SELECT p.project_id, p.name AS 'Project', p.lft, p.depth,
     ON t.project_id = p.project_id
  WHERE 1 = 1
    AND (t.spent_on BETWEEN "{{ date_range.start }}" AND "{{ date_range.end }}")
-   AND ("{{ project_filter }}" = "ALL" OR p.name = "{{ project_filter }}")
+   AND ("{{ project_filter }}" = "ALL" OR p.longname = "{{ project_filter }}")
    AND ("{{ user_filter }}" = "ALL" OR t.user_name = "{{ user_filter }}")
    AND ("{{ activity_filter }}" = "ALL" OR t.activity_name = "{{ activity_filter }}")
    AND ("{{ tri_filter }}" = "ALL" OR t.istri_value = "{{ tri_filter }}")
