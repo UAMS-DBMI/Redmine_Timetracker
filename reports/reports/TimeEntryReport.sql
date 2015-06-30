@@ -1,6 +1,6 @@
--- Time Report
--- This report will let you retrieve time for all projects using multiple
--- filters on project, user, dates, activity and efforts.
+-- Time Entry Report
+-- This report will let you retrieve time entries for all projects using multiple
+-- filters on project, user, dates and activity.
 -- VARIABLE: {
 --      name: "date_range",
 --      display: "Date Range",
@@ -40,6 +40,12 @@
 --      },
 --      multiple: false
 -- }
+-- VARIABLE: {
+--      name: "tri_filter",
+--      display: "TRI",
+--      type: "select",
+--      options: ["ALL","true","false"]
+-- }
 -- FILTER: {
 --      filter: "hide",
 --      column: "project_id"
@@ -74,7 +80,7 @@ SELECT p.project_id, p.name AS 'Project', p.lft, p.depth,
        t.time_entry_id, t.user_id, t.user_name AS 'User',
        t.issue_id, t.issue_subject AS 'Issue', t.hours AS 'Hours',
        t.spent_on AS 'Date', t.activity_id, t.activity_name AS 'Activity',
-       t.effort_values AS 'Effort', t.comments AS 'Notes'
+       t.effort_values AS 'Effort', t.istri_value AS 'TRI', t.comments AS 'Notes'
   FROM project_info p
   LEFT JOIN time_entry_info t
     ON t.project_id = p.project_id
@@ -83,33 +89,7 @@ SELECT p.project_id, p.name AS 'Project', p.lft, p.depth,
    AND ("{{ project_filter }}" = "ALL" OR p.name = "{{ project_filter }}")
    AND ("{{ user_filter }}" = "ALL" OR t.user_name = "{{ user_filter }}")
    AND ("{{ activity_filter }}" = "ALL" OR t.activity_name = "{{ activity_filter }}")
+   AND ("{{ tri_filter }}" = "ALL" OR t.istri_value = "{{ tri_filter }}")
 /*
- WHERE 1 = 1
-   AND (t.spent_on BETWEEN "{{ date_range.start }}" AND "{{ date_range.end }}")
-   AND ("{{ project }}" IS NULL OR p.project_id = "{{ project }}")
-   AND ("{{ user }}" IS NULL OR t.user_id = "{{ user }}")
-   AND ("{{ activity }}" IS NULL OR t.activity_id = "{{ activity }}")
    AND ("{{ efforts }}" IS NULL OR t.effort_values REGEXP "{{ efforts }}");  #must have single quotes and | between values for regexp
-
-
-
-SELECT
-    order_id as `Order Id`,
-    created_at as `Order Date`,
-    CONCAT(customer_fname, " ", customer_lname) as `Customer Name`,
-    customer_id as `Customer Id`,
-    grand_total as `Grand Total`,
-    status as `Order Status`
-FROM
-    orders
-WHERE
-    created_at BETWEEN "{{ range.start }}" AND "{{ range.end }}"
-
--- FILTER: {
---      column: "user_id",
---      filter: "drilldown",
---      params: {
---          report: "drilldown/UserDrillDown.sql"
---      }
--- }
 */
