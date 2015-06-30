@@ -90,6 +90,7 @@ SELECT p.project_id, p.longname AS 'Project', p.lft, p.depth,
    AND ("{{ user_filter }}" = "ALL" OR t.user_name = "{{ user_filter }}")
    AND ("{{ activity_filter }}" = "ALL" OR t.activity_name = "{{ activity_filter }}")
    AND ("{{ tri_filter }}" = "ALL" OR t.istri_value = "{{ tri_filter }}")
+ ORDER BY p.lft,t.user_id,t.spent_on
 /*
    AND ("{{ efforts }}" IS NULL OR t.effort_values REGEXP "{{ efforts }}");  #must have single quotes and | between values for regexp
 */

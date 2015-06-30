@@ -132,7 +132,8 @@ and open the template in the editor.
                             //echo '<br>';
                         }
                     }
-                    
+
+                    /*
                     //echo 'TRI_CVID: '.$istri_cvid. '<br>';
                     if (isset($_POST[$triID])) {
                         $tri = $_POST[$triID];
@@ -141,7 +142,7 @@ and open the template in the editor.
                         }
                         #print_r($tri);
                     }
-
+                    */
                     
 
                     //echo 'Notes: ' . $notes . "<br>";
@@ -208,6 +209,7 @@ and open the template in the editor.
                         //echo '<br> DELETE Exisitng Efforts: '.$deleteEff;
                         RedmineDB::getInstance()->insertSQL($deleteEff);
                     }
+
                     if (isset($_POST[$effortsID])) {
                         $efforts = $_POST[$effortsID];
                         if (!empty($efforts)) {
@@ -231,9 +233,10 @@ and open the template in the editor.
                         }
                     }
 
+                    /*
                     if (isset($_POST[$triID])) {
                         $tri = $_POST[$triID];
-                        if (!empty($tri)) {
+                        #if (!empty($tri)) {
                             if ($tri[0] == 'tri') {
                                 $t = 1;
                             } else {
@@ -258,7 +261,7 @@ and open the template in the editor.
                                 //echo "<br>SQL for TRI: " . $sqlTRI;
                                 RedmineDB::getInstance()->insertSQL($sqlTRI);
                             } 
-                        }
+                        #}
                     } else {
                         if(empty($tri) && !empty($istri_cvid)){
                             $sqlTRI = "UPDATE bitnami_redmine.custom_values SET value = '0' WHERE id = ".$istri_cvid." ;";
@@ -266,8 +269,42 @@ and open the template in the editor.
                             RedmineDB::getInstance()->insertSQL($sqlTRI);
                         }
                     }
-                    
-                    
+                    */
+
+                    $tri = $_POST[$triID];
+                    #echo $tri[0];
+                    if ($tri[0] == 'tri') {
+                        $t = 1;
+                    } else {
+                        $t = 0;
+                    }
+                    #echo "<br>Value: ". $t;
+
+                    if($action_type=="INSERT"){
+                        if(!empty($arryLastTEID)){
+                            for ($ct=0;$ct<sizeof($arryLastTEID);$ct++){
+                                $sqlTRI = "INSERT INTO bitnami_redmine.custom_values (customized_type, customized_id, custom_field_id, value) "
+                                    . "VALUES ('TimeEntry', " . $arryLastTEID[$ct] . ", 3, " . $t . ");";
+                                #echo '<br>SQL Insert TRI: ' . $sqlTRI;
+                                RedmineDB::getInstance()->insertSQL($sqlTRI);
+                            }
+                        }
+                    } else if ($action_type=="UPDATE"){
+                        if (!empty($istri_cvid)){
+                            $sqlTRI = "UPDATE bitnami_redmine.custom_values SET value = ".$t." WHERE id = ".$istri_cvid." ;";
+                            #echo "<br>SQL Update 1: " . $sqlTRI;
+                            RedmineDB::getInstance()->insertSQL($sqlTRI);
+                        }
+                        else
+                        {
+                            $sqlTRI = "INSERT INTO bitnami_redmine.custom_values (customized_type, customized_id, custom_field_id, value) "
+                                . "VALUES ('TimeEntry', " . $te_id . ", 3, " . $t . ");";
+                            #echo '<br>SQL Insert TRI: ' . $sqlTRI;
+                            RedmineDB::getInstance()->insertSQL($sqlTRI);
+                        }
+                    }
+
+
                     #echo '<br>************************************************<br>';
                 }
                 else if($hr_flag==1){//if Hours is changed to null or 0
@@ -308,7 +345,7 @@ and open the template in the editor.
         #header('Location: /timetracker/index.php?date='.$dateFormatted);
         ?>
         <script type="text/javascript">
-            window.location= 'index.php?date=<?php echo $dateFormatted; ?>'
+           window.location= 'index.php?date=<?php echo $dateFormatted; ?>'
         </script>
     </body>
 </html>
