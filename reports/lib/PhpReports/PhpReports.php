@@ -9,7 +9,8 @@ class PhpReports {
 	
 	private static $loader_cache;
 	
-	public static function init($config = 'config/config.php') {
+	#public static function init($config = 'config/config.php') {
+    public static function init($config = '../config.php') {
 		//set up our autoloader
 		spl_autoload_register(array('PhpReports','loader'),true,true);
 
