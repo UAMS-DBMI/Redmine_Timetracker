@@ -6,3 +6,4 @@ reports/cache
 /*.phpproj.user
 /*.sln
 /*.suo
+/.idea
