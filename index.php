@@ -113,11 +113,11 @@ and open the template in the editor.
                         }
 
                         #echo "********DATE  " . $date . "**********";
-                        echo $pid . '<br />';
-                        echo $day . '<br />';
-                        echo $sunday . '<br />';
-                        echo $date . '<br />';
-                        echo $saturday;
+                        #echo $pid . '<br />';
+                        #echo $day . '<br />';
+                        #echo $sunday . '<br />';
+                        #echo $date . '<br />';
+                        #echo $saturday;
 
                         $weekTotal = RedmineDB::getInstance()->getWeekTotal($pid, $sunday, $date, $saturday);
                         $_SESSION['weektotal'] = $weekTotal;
