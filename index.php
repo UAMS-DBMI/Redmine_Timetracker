@@ -18,20 +18,17 @@ and open the template in the editor.
         <title>Redmine Time Tracker</title>
         <?php include 'header.php'; ?>
         <style>
+            body {
+                margin-top: 40px;
+                margin-bottom: 50px;
+            }
             .ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
                 background-color: black;
             }
-
-            body {
-                padding-top: 40px;
-                padding-bottom: 50px;
-            }
-
             .dropdown-menu {
-                margin-bottom: 70px;
+                margin-bottom: 10px;
+                z-index: 2;
             }
-
-
         </style>
         <script type="text/javascript" src="public/javascripts/loggingTime.php"></script>
     </head>
@@ -309,7 +306,7 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
-            <div class="navbar navbar-default navbar-fixed-bottom">
+            <div style="z-index: 1;" class="navbar navbar-default navbar-fixed-bottom">
                 <div class="container-fluid" style="padding-top: 5px;padding-bottom: 5px">
                     <div style="float: left">
                         <table width="100%">
