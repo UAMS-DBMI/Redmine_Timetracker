@@ -87,25 +87,37 @@ and open the template in the editor.
                         ## Setting date for calendar
                         if (isset($_POST['selecteddate'])) {
                             $date = $_POST['selecteddate'];
-                        } else if (isset($_GET['date'])) {
+                        }
+                        else if (isset($_GET['date'])) {
                             $date = $_GET['date'];
-                        } else {
+                        }
+                        else {
                             $date = date('m/d/Y');
-                            #$date = '2015-06-04';
                         }
 
-                        #$lastsunday = strtotime("last sunday", $date);
-                        #$nextsaturday = strtotime("next saturday", $date);
-
                         ## Setting date for SQL parameter
+                        $day = date('w', strtotime($date));
                         $date = date('Y-m-d', strtotime($date));
-                        $sunday = date('Y-m-d', strtotime('last Sunday', strtotime($date))); #date('Y-m-d', strtotime($lastsunday));
-                        $saturday = date('Y-m-d', strtotime('next Saturday', strtotime($date))); #date('Y-m-d', strtotime($nextsaturday));
+
+                        if ($day == 0) {
+                            $sunday = date('Y-m-d', strtotime($date));
+                            $saturday = date('Y-m-d', strtotime('next Saturday', strtotime($date)));
+                        }
+                        else if ($day == 6){
+                            $sunday = date('Y-m-d', strtotime('last Sunday', strtotime($date)));
+                            $saturday = date('Y-m-d', strtotime($date));
+                        }
+                        else {
+                            $sunday = date('Y-m-d', strtotime('last Sunday', strtotime($date)));
+                            $saturday = date('Y-m-d', strtotime('next Saturday', strtotime($date)));
+                        }
+
                         #echo "********DATE  " . $date . "**********";
-                        #echo $pid;
-                        #echo $sunday;
-                        #echo $date;
-                        #echo $saturday;
+                        echo $pid . '<br />';
+                        echo $day . '<br />';
+                        echo $sunday . '<br />';
+                        echo $date . '<br />';
+                        echo $saturday;
 
                         $weekTotal = RedmineDB::getInstance()->getWeekTotal($pid, $sunday, $date, $saturday);
                         $_SESSION['weektotal'] = $weekTotal;
