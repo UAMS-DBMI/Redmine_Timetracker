@@ -78,6 +78,9 @@ and open the template in the editor.
 
                     <div class="panel-body">
                         <?php
+
+                        #$db = new RedmineDB(require 'config.php');
+
                         require_once 'db.php';
                         $pid = $_SESSION['userid'];
 

@@ -1,6 +1,5 @@
 /config.php
 /reports/config/config.php
-db.php
 reports/cache
 /*.phpproj
 /*.phpproj.user
