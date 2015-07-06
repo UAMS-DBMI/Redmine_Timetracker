@@ -1,4 +1,5 @@
 <?php
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,36 +11,16 @@
  *
  * @author WangHanni
  */
-
 class RedmineDB extends mysqli {
 
     /** single instance of self shared among all instances */
     private static $instance = null;
 
     /** DB connection config vars - NEW INSTANCE** */
-
-
-    private $user = "";
-    private $pass = "";
-    private $dbName = "";
-    private $dbHost = "";
-
-
-    /** private constructor */
-    public function __construct() {
-
-        $config = require_once 'config.php';
-        $this->user = $config['dbUser'];
-        $this->pass = $config['dbPass'];
-        $this->dbName = $config['dbName'];
-        $this->dbHost = $config['dbHost'];
-
-        parent::__construct($this->dbHost, $this->user, $this->pass, $this->dbName); // $this is used for referencing the obj itself. for non-static vars
-        if (mysqli_connect_error()) {
-            exit("Connection Error ( " . mysqli_connect_errno() . " ' " . mysqli_connect_error());
-        }
-        parent::set_charset("utf-8");
-    }
+    private $user = "bitnami";
+    private $pass = "d50f45f52f";
+    private $dbName = "bitnami_redmine";
+    private $dbHost = "ncsims.ad.uams.edu";
 
     /** This method must be status, and must return an instance of the object if the object does not already exists */
     public static function getInstance() {
@@ -50,7 +31,8 @@ class RedmineDB extends mysqli {
     }
 
     public function getConfig() {
-        return $this->user;
+        $output = include('config.php');
+        return $output;
     }
 
     // The clone and wakeup methods prevents external instantiation of copies of the Singleton class,
@@ -63,7 +45,15 @@ class RedmineDB extends mysqli {
         trigger_error('Deserializing is not allowed.', E_USER_ERROR);
     }
 
-
+    /** private constructor */
+    private function __construct() {
+        parent::__construct($this->dbHost, $this->user, $this->pass, $this->dbName); // $this is used for referencing the obj itself. for non-static vars
+        if (mysqli_connect_error()) {
+            exit("Connection Error ( " . mysqli_connect_errno() . " ' " . mysqli_connect_error());
+        }
+        parent::set_charset("utf-8");
+    }
+    
     public function getUserIDFromUserName($user_name) {
         $user_id = $this->query("SELECT id FROM bitnami_redmine.users WHERE status = 1 AND login = '".$user_name."'; "); 
         $row = $user_id->fetch_row();
@@ -201,4 +191,5 @@ class RedmineDB extends mysqli {
             return $row[0];
         }
     }
+
 }
