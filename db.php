@@ -17,6 +17,8 @@ class RedmineDB extends mysqli {
     private static $instance = null;
 
     /** DB connection config vars - NEW INSTANCE** */
+
+
     private $user = "";
     private $pass = "";
     private $dbName = "";
