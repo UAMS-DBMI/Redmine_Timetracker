@@ -1,6 +1,18 @@
 RewriteEngine On
+
+# Original Code (didn't work on local host setup)
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^(.*)$ index.php [QSA,L]
+
+#RewriteCond %{REQUEST_URI}::$1 ^(.*?/)(.*)::\2$
+#RewriteRule ^(.*)$ - [E=BASE:%1]
+#RewriteBase %{ENV:BASE}
+
+RewriteBase /
+
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [QSA,L]
+RewriteCond $0#%{REQUEST_URI} ([^#]*)#(.*)\1$
+RewriteRule ^(.*)$ %2index.php [QSA,L]
 
 DirectoryIndex index.php
