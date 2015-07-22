@@ -74,42 +74,44 @@ class RedmineDB extends mysqli {
        entries.effort_cvids, entries.effort_values,
        entries.investigator_cvid, entries.investigator_value,
        CASE WHEN entries.hours IS NULL THEN 'INSERT' ELSE 'UPDATE' END AS action_type,
-       0 AS action_edited
+       0 AS action_edited, proj.closed_on
   FROM (
     SELECT issue.project_id , issue.id AS issue_id,
            CONCAT('Issue ', CAST(issue.id AS CHAR), ': ', issue.subject) AS name,
            (SELECT node.lft
               FROM bitnami_redmine.projects AS node
-             WHERE node.id = issue.project_id) AS lft,       
+             WHERE node.id = issue.project_id) AS lft,
            (SELECT (COUNT(parent.name) - 1) AS depth
               FROM bitnami_redmine.members
-              JOIN bitnami_redmine.projects AS node 
+              JOIN bitnami_redmine.projects AS node
                 ON node.id = members.project_id
-              JOIN bitnami_redmine.projects AS parent 
+              JOIN bitnami_redmine.projects AS parent
                 ON node.lft BETWEEN parent.lft AND parent.rgt
-             WHERE node.status = 1 
-               AND node.id = issue.project_id 
+             WHERE node.status = 1
+               AND node.id = issue.project_id
                AND members.user_id = " . $USER .
-                " GROUP BY node.name) + 1 AS depth
+            " GROUP BY node.name) + 1 AS depth,
+           issue.closed_on
       FROM bitnami_redmine.issues AS issue
      WHERE issue.assigned_to_id = " . $USER .
-                " OR EXISTS (SELECT id FROM bitnami_redmine.watchers 
-                    WHERE watchers.watchable_type = 'Issue' 
-                      AND watchers.watchable_id = issue.id 
+            " OR EXISTS (SELECT id FROM bitnami_redmine.watchers
+                    WHERE watchers.watchable_type = 'Issue'
+                      AND watchers.watchable_id = issue.id
                       AND watchers.user_id = " . $USER . " )
      UNION ALL
     SELECT node.id AS project_id, NULL AS issue_id,
-           node.name, node.lft, (COUNT(parent.name) - 1) AS depth
+           node.name, node.lft, (COUNT(parent.name) - 1) AS depth,
+           NULL AS closed_on
       FROM bitnami_redmine.members
-      JOIN bitnami_redmine.projects AS node 
+      JOIN bitnami_redmine.projects AS node
         ON node.id = members.project_id
-      JOIN bitnami_redmine.projects AS parent 
+      JOIN bitnami_redmine.projects AS parent
         ON node.lft BETWEEN parent.lft AND parent.rgt
      WHERE node.status = 1 AND members.user_id = " . $USER .
-                " GROUP BY node.name) proj
+            " GROUP BY node.name) proj
   LEFT JOIN (SELECT time_entries.id, time_entries.project_id,
        time_entries.user_id, time_entries.issue_id,
-       time_entries.hours, time_entries.spent_on, time_entries.activity_id, 
+       time_entries.hours, time_entries.spent_on, time_entries.activity_id,
        IF(time_entries.comments = '', NULL, time_entries.comments) as comments,
        (SELECT name FROM bitnami_redmine.enumerations
          WHERE enumerations.type = 'TimeEntryActivity'
@@ -117,7 +119,7 @@ class RedmineDB extends mysqli {
        (SELECT id
           FROM bitnami_redmine.custom_values
          WHERE custom_values.custom_field_id = 3
-           AND custom_values.customized_id = time_entries.id) AS istri_cvid,           
+           AND custom_values.customized_id = time_entries.id) AS istri_cvid,
        (SELECT value
           FROM bitnami_redmine.custom_values
          WHERE custom_values.custom_field_id = 3
@@ -137,12 +139,14 @@ class RedmineDB extends mysqli {
        (SELECT IF(value = '', NULL, value) as value
           FROM bitnami_redmine.custom_values
          WHERE custom_values.custom_field_id = 10
-           AND custom_values.customized_id = time_entries.id) AS investigator_value           
+           AND custom_values.customized_id = time_entries.id) AS investigator_value
   FROM bitnami_redmine.time_entries
  WHERE time_entries.user_id = " . $USER .
-                " AND time_entries.spent_on = '" . $DATE . "') entries 
+            " AND time_entries.spent_on = '" . $DATE . "') entries
     ON entries.project_id = proj.project_id
    AND IFNULL(entries.issue_id,0) = IFNULL(proj.issue_id,0)
+ WHERE proj.closed_on IS NULL
+    OR '" . $DATE . "' < DATE_ADD(proj.closed_on, INTERVAL 7 DAY)
  ORDER BY proj.lft, proj.depth) comb,
  (SELECT @row := 0) r;");
         return $pList;
