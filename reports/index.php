@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (empty($_SESSION['loggedin']) or $_SESSION['loggedin'] == "false"){
-    header("Location: ../login.php");
+    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/timetracker/login.php");
 }
 
 //set php ini so the page doesn't time out for long requests
@@ -58,6 +58,7 @@ if(isset(PhpReports::$config['ga_api'])) {
 
 Flight::route('/',function() {
 	PhpReports::listReports();
+
 });
 
 Flight::route('/dashboards',function() {
